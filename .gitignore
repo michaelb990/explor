@@ -1,0 +1,22 @@
+.DS_Store
+
+# via GitHub's gitignore project
+# https://github.com/github/gitignore/blob/master/Android.gitignore
+
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+R.java
+explor/bin/
+explor/gen/
+
+# Local configuration file (sdk path, etc)
+local.properties
