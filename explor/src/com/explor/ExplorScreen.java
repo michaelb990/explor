@@ -24,7 +24,16 @@ public class ExplorScreen extends Activity {
         setContentView(R.layout.main);
         
         mLocationMgr = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+    }
+    
+    @Override
+    public void onResume() {
         mLocationMgr.requestLocationUpdates(LOCATION_PROVIDER, 0, MIN_NOTIFICATION_DIST, mLocationListener);
+    }
+    
+    @Override
+    public void onPause() {
+    	mLocationMgr.removeUpdates(mLocationListener);
     }
 
     private final LocationListener mLocationListener = new LocationListener() {
