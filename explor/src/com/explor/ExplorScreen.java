@@ -12,11 +12,13 @@ public class ExplorScreen extends Activity {
     
 	private static final String TAG = ExplorScreen.class.getSimpleName();
 	
-	private static final int    MIN_NOTIFICATION_DIST = 2; // meters
-	//private static final String LOCATION_PROVIDER     = LocationManager.NETWORK_PROVIDER;
-	private static final String LOCATION_PROVIDER     = LocationManager.GPS_PROVIDER;
+	private static final int    MIN_NOTIFICATION_DIST     = 2; // meters
+	private static final String NETWORK_LOCATION_PROVIDER = LocationManager.NETWORK_PROVIDER;
+	private static final String GPS_LOCATION_PROVIDER     = LocationManager.GPS_PROVIDER;
 	
 	private LocationManager mLocationMgr;
+
+    private final LocationListener mLocationListener = new ExplorLocationListener();
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,8 @@ public class ExplorScreen extends Activity {
     
     @Override
     public void onResume() {
-        mLocationMgr.requestLocationUpdates(LOCATION_PROVIDER, 0, MIN_NOTIFICATION_DIST, mLocationListener);
+        mLocationMgr.requestLocationUpdates(GPS_LOCATION_PROVIDER, 0, MIN_NOTIFICATION_DIST, mLocationListener);
+        mLocationMgr.requestLocationUpdates(NETWORK_LOCATION_PROVIDER, 0, MIN_NOTIFICATION_DIST, mLocationListener);
     }
     
     @Override
@@ -36,7 +39,7 @@ public class ExplorScreen extends Activity {
     	mLocationMgr.removeUpdates(mLocationListener);
     }
 
-    private final LocationListener mLocationListener = new LocationListener() {
+    private final class ExplorLocationListener implements LocationListener {
     	public void onLocationChanged(Location location) {
     		Log.i(TAG, location.getLatitude() + "  " + location.getLongitude());
     	}
@@ -46,5 +49,5 @@ public class ExplorScreen extends Activity {
     	public void onProviderEnabled(String provider) {}
 
     	public void onProviderDisabled(String provider) {}
-    };
+    }
 }
